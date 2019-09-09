@@ -22,6 +22,6 @@ const orderedMessages = messages => {
     (a, b) => new Date(a.created_at) - new Date(b.created_at)
   );
   return sortedMessages.map(message => {
-    return <li key={message.id}>{message.detected_language} => ID: {message.identifier}</li>;
+    return <li key={message.text}>{message.detected_language} => ID: {message.identifier}</li>;
   });
 };

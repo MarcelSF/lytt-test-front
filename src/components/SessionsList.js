@@ -2,6 +2,7 @@ import React from 'react';
 import { ActionCable } from 'react-actioncable-provider';
 import { API_ROOT } from '../constants';
 import MessagesArea from './MessagesArea';
+import NewSessionForm from './NewSessionForm';
 import Cable from './Cable';
 
 class SessionsList extends React.Component {
@@ -29,15 +30,17 @@ class SessionsList extends React.Component {
   };
 
   handleReceivedMessage = response => {
+
     const { message } = response;
-    if (response === message){
+    console.log(response);
+    console.log(message);
     const sessions = [...this.state.sessions];
     const session = sessions.find(
       session => session.id === message.session_id
     );
     session.messages = [...session.messages, message];
     this.setState({ sessions })
-    };
+
    };
 
   render = () => {
@@ -56,7 +59,7 @@ class SessionsList extends React.Component {
         ) : null}
         <h2>Sessions</h2>
         <ul>{mapSessions(sessions, this.handleClick)}</ul>
-
+        <NewSessionForm />
         {activeSession ? (
           <MessagesArea
             session={findActiveSession(
@@ -80,11 +83,22 @@ const findActiveSession = (sessions, activeSession) => {
   );
 };
 
+// const expectedResponse =
+//     {message:
+//       {identifier: *,
+//        session_id: *,
+//        detected_language: *,
+//        created_at: *
+//       }
+//     };
+
+
+
 const mapSessions = (sessions, handleClick) => {
   return sessions.map(session => {
     return (
       <li key={session.id} onClick={() => handleClick(session.id)}>
-        {session.title}
+        {session.id}
       </li>
     );
   });
